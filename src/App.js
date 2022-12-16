@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { DataStore } from '@aws-amplify/datastore';
+import { Post } from './models';
+import { MyForm } from './ui-components'
+
 
 function App() {
+  async function create() {
+    const posts = await DataStore.save(
+      new Post({
+      "title": "Lorem ipsum dolor sit amet",
+      "comments": [],
+      "content": "Lorem ipsum dolor sit amet"
+      })
+    );
+    console.log('posts: ', posts)
+  }
+  create();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     <MyForm
+    onSubmit={fields => console.log(fields)}
+    />
     </div>
   );
 }
